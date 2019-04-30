@@ -3,16 +3,17 @@
 // https://github.com/nature-of-code/noc-syllabus-S19
 
 const INPUTS = 5;
-const HIDDEN = 10;
+let HIDDEN = 10;
 const OUTPUTS = 2;
 const mutation = 0.1;
 
 class NeuralNetwork {
   constructor(nn) {
-    // console.log(hiddenSlider.value());
-    // if (keyPressed) {
-    //   HIDDEN = hiddenSlider.value();
-    // }
+    console.log(hiddenSlider.value());
+    if (mouseIsPressed) {
+      HIDDEN = hiddenSlider.value();
+      initialise();
+    }
     if (nn instanceof tf.Sequential) {
       this.model = nn;
     } else {

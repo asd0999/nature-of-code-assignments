@@ -65,7 +65,7 @@ function initialise() {
   background(240);
   activeBirds = [];
   allBirds = [];
-  console.log(hiddenSlider.value());
+  // console.log(hiddenSlider.value());
   for (let i = 0; i < totalPopulation; i++) {
     let bird = new Bird();
     activeBirds[i] = bird;
