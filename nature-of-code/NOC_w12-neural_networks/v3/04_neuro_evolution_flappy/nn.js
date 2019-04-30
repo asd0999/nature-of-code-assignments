@@ -3,7 +3,7 @@
 // https://github.com/nature-of-code/noc-syllabus-S19
 
 const INPUTS = 5;
-const HIDDEN = 8;
+const HIDDEN = 10;
 const OUTPUTS = 2;
 const mutation = 0.1;
 
