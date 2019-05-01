@@ -3,17 +3,24 @@
 // https://github.com/nature-of-code/noc-syllabus-S19
 
 const INPUTS = 5;
-let HIDDEN = 10;
 const OUTPUTS = 2;
-const mutation = 0.1;
+let HIDDEN = 8; //variables that populate the model
+let mutation = 0.1; //variables that populate the model
+let _hidden = 8; //temp variables
+let _mutation = 1; //temp variables
 
 class NeuralNetwork {
   constructor(nn) {
-    console.log(hiddenSlider.value());
-    if (mouseIsPressed) {
-      HIDDEN = hiddenSlider.value();
-      initialise();
+    // console.log(hiddenSlider.value());
+    if (keyIsPressed && key == 's') {
+      // console.log('keypressed from nunu');
+      _hidden = hiddenSlider.value();
+      _mutation = mutationSlider.value() / 10;
+      // initialise();
     }
+    HIDDEN = _hidden;
+    mutation = _mutation;
+    console.log(HIDDEN + ' ' + mutation);
     if (nn instanceof tf.Sequential) {
       this.model = nn;
     } else {

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <style>
     #speedSlider {
-      display: none;
+      display: show;
     }
     #speed {
       display: show;
@@ -19,7 +19,7 @@
       display: show;
     }
     #save {
-      display: show;
+      display: none;
     }
 
   </style>
@@ -41,7 +41,10 @@
   all time high score: <span id="ahs">0</span>
   <button id="best">run best so far</button>
   <button id="save">save best model</button>
-  nodes in hidden: <input id="hiddenSlider" type="range" min="4" max="12" value="10" /> <span id="hidden">1</span>
+  <br>
+  nodes : <input id="hiddenSlider" type="range" min="4" max="12" value="8" /> <span id="hidden">8</span><br>
+  mutation : <input id="mutationSlider" type="range" min="0" max="10" value="1" /> <span id="mutation">1</span>
+  <button id="init">initialise</button>
 
 
 </body>

@@ -20,13 +20,17 @@ let genCount = 1;
 let fc_start = 0;
 let fc_stop = 0;
 let fc_diff = 0;
-let hiddenSlider;
 
 // Interface elements
 let speedSlider;
 let speedSpan;
 let highScoreSpan;
 let allTimeHighScoreSpan;
+let hiddenSlider;
+let hiddenSpan;
+let mutationSlider;
+let mutationSpan;
+let initButton;
 
 // All time high score
 let highScore = 0;
@@ -51,9 +55,13 @@ function setup() {
   runBestButton = select('#best');
   runBestButton.mousePressed(toggleState);
   hiddenSlider = select('#hiddenSlider');
-
+  hiddenSpan = select('#hidden');
+  mutationSlider = select('#mutationSlider');
+  mutationSpan = select('#mutation');
   saveButton = select('#save');
   saveButton.mousePressed(saveModel);
+  initButton = select('#init');
+  initButton.mousePressed(initialise);
 
   // Create a population
   initialise();
@@ -72,6 +80,7 @@ function initialise() {
     allBirds[i] = bird;
   }
   genCount = 1;
+  highScore = 0;
   fc_start = frameCount;
 }
 
@@ -201,13 +210,15 @@ function draw() {
   // Update DOM Elements
   highScoreSpan.html(tempHighScore);
   allTimeHighScoreSpan.html(highScore);
+  hiddenSpan.html(hiddenSlider.value());
+  mutationSpan.html(mutationSlider.value());
 
   // Draw everything!
   for (let i = 0; i < pipes.length; i++) {
     pipes[i].show();
-    if (!runBest) {
-      pipes[i].showShifted();
-    }
+    // if (!runBest) {
+    // pipes[i].showShifted();
+    // }
   }
 
   if (runBest) {
@@ -215,29 +226,29 @@ function draw() {
   } else {
     for (let i = 0; i < activeBirds.length; i++) {
       activeBirds[i].show();
-      if (i == 0) {
-        let bird = activeBirds[i];
-        if (pipes[0] != null && pipes[0].x >= bird.x) {
-          stroke(0, 0, 255);
-          fill(0, 0, 255);
-          // ellipse(bird.x + 640 + 80, bird.inputs[0] * 480, 10, 10);
-          // ellipse(pipes[0].x + 640 + 80, bird.inputs[1] * 480, 10, 10);
-          // ellipse(pipes[0].x + 640 + 80, bird.inputs[1] * 480 + 125, 10, 10);
-          strokeWeight(1);
-          line(bird.x + 640 + 80, bird.y, pipes[0].x + 640 + 80, bird.inputs[1] * 480);
-          line(bird.x + 640 + 80, bird.y, pipes[0].x + 640 + 80, bird.inputs[1] * 480 + 125);
-        }
-        if (!runBest) {
-          bird.showShifted();
-        }
-        if (!loopBool) {
-          if (bird.inputs[4] < 0) {
-            triangle(bird.x + 640 + 80, bird.y - 40, bird.x + 640 + 70, bird.y - 30, bird.x + 640 + 90, bird.y - 30);
-          } else if (bird.inputs[4] > 0 && bird.y < 450) {
-            triangle(bird.x + 640 + 80, bird.y + 40, bird.x + 640 + 70, bird.y + 30, bird.x + 640 + 90, bird.y + 30);
-          }
-        }
-      }
+      // if (i == 0) {
+      //   let bird = activeBirds[i];
+      //   if (pipes[0] != null && pipes[0].x >= bird.x) {
+      //     stroke(0, 0, 255);
+      //     fill(0, 0, 255);
+      //     // ellipse(bird.x + 640 + 80, bird.inputs[0] * 480, 10, 10);
+      //     // ellipse(pipes[0].x + 640 + 80, bird.inputs[1] * 480, 10, 10);
+      //     // ellipse(pipes[0].x + 640 + 80, bird.inputs[1] * 480 + 125, 10, 10);
+      //     strokeWeight(1);
+      //     line(bird.x + 640 + 80, bird.y, pipes[0].x + 640 + 80, bird.inputs[1] * 480);
+      //     line(bird.x + 640 + 80, bird.y, pipes[0].x + 640 + 80, bird.inputs[1] * 480 + 125);
+      //   }
+      //   // if (!runBest) {
+      //   // bird.showShifted();
+      //   // }
+      //   if (!loopBool) {
+      //     if (bird.inputs[4] < 0) {
+      //       triangle(bird.x + 640 + 80, bird.y - 40, bird.x + 640 + 70, bird.y - 30, bird.x + 640 + 90, bird.y - 30);
+      //     } else if (bird.inputs[4] > 0 && bird.y < 450) {
+      //       triangle(bird.x + 640 + 80, bird.y + 40, bird.x + 640 + 70, bird.y + 30, bird.x + 640 + 90, bird.y + 30);
+      //     }
+      //   }
+      // }
     }
     // If we're out of birds go to the next generation
     if (activeBirds.length == 0) {
