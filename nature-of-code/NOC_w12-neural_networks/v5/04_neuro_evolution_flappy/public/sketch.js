@@ -219,10 +219,13 @@ function draw() {
 
   if (highScore > 60 && allowSaveToDb == true) {
     postData(`/log`, {
-      nodes: HIDDEN, //HIDDEN from nn
-      mutation: _mutation, //mutation*100 from nn
-      generation: genCount //genCount from here
-    });
+        nodes: HIDDEN, //HIDDEN from nn
+        mutation: _mutation, //mutation*100 from nn
+        generation: genCount //genCount from here
+      })
+      .then(data => console.log(JSON.stringify(data))) // JSON-string from `response.json()` call
+      .catch(error => console.error(error));
+
 
     allowSaveToDb = false;
     console.log('posted!');
@@ -303,9 +306,19 @@ function keyPressed() {
 
 function postData(url, data) {
   console.log(url, data);
-  $.post("/log", data, function(data, status) {
-    return data
-  });
+  // $.post("/log", data, function(data, status) {
+  //   return data
+  // });
+  return fetch(url, {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        "Content-Type": "application/json",
+        // "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: JSON.stringify(data), // body data type must match "Content-Type" header
+    })
+    .then(response => response.json()); // parses JSON response into native Javascript objects
+
 }
 
 // function getData(url) {

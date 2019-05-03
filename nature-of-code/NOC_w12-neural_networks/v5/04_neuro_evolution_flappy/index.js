@@ -10,6 +10,7 @@ const path = require('path');
 app.use(bodyParser.urlencoded({
   extended: false
 }));
+app.use(bodyParser.json());
 
 const PORT = process.env.PORT || 8000;
 var {
@@ -34,18 +35,6 @@ app.post('/log', function(req, res) {
     }
     console.log('success!');
   });
-});
-
-app.get('/', function(req, res1) {
-  client.query('SELECT * FROM posts', function(err, res2) {
-    if (err) {
-      console.log(error);
-    }
-    for (let row of res2.rows) {
-      console.log(JSON.stringify(row));
-    }
-  });
-
 });
 
 app.listen(PORT, function() {
