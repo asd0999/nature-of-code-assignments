@@ -36,14 +36,6 @@ app.post('/log', function(req, res) {
   });
 });
 
-//Here we are configuring express to use body-parser as middle-ware.
-
-// app.engine('html', mustacheExpress());
-// app.set('view engine', 'html');
-// app.set('views', __dirname);
-
-// var sketch = require("./public/sketch.js");
-
 app.get('/', function(req, res1) {
   client.query('SELECT * FROM posts', function(err, res2) {
     if (err) {
@@ -52,12 +44,6 @@ app.get('/', function(req, res1) {
     for (let row of res2.rows) {
       console.log(JSON.stringify(row));
     }
-    // let messagesArray = res2.rows;
-    // res1.render('index', {
-    //   messagesArray
-    // });
-    // console.log(messagesArray);
-    // client.end();
   });
 
 });
