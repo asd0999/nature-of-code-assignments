@@ -33,9 +33,28 @@ app.post('/log', function(req, res) {
     if (error) {
       console.log(error);
     }
-    console.log('success!');
+    // console.log('success!');
+    client.query('SELECT * FROM neural', function(err, res2) {
+      if (err) {
+        console.log(error);
+      }
+      let message = [];
+      for (let row of res2.rows) {
+        message.push(row);
+      }
+      console.log(message);
+      res.send(message);
+    });
   });
 });
+
+// for (let row of res2.rows) {
+//   console.log(JSON.stringify(row));
+//   message[row] = row;
+// }
+// res.send({
+//   ROW: message
+// });
 
 app.listen(PORT, function() {
   console.log('Server up! Listening on port: ' + PORT);

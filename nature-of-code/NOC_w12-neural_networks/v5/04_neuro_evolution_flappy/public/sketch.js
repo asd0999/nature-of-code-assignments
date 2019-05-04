@@ -223,7 +223,7 @@ function draw() {
         mutation: _mutation, //mutation*100 from nn
         generation: genCount //genCount from here
       })
-      .then(data => console.log(JSON.stringify(data))) // JSON-string from `response.json()` call
+      // .then(data => console.log(JSON.stringify(data))) // JSON-string from `response.json()` call
       .catch(error => console.error(error));
 
 
@@ -317,7 +317,12 @@ function postData(url, data) {
       },
       body: JSON.stringify(data), // body data type must match "Content-Type" header
     })
-    .then(response => response.json()); // parses JSON response into native Javascript objects
+    .then(response => console.log(response.json())
+      // var array = response.JSON
+      // let specificObject = array.filter(object => {
+      // return object.id = 23;
+      // })
+    ); // parses JSON response into native Javascript objects
 
 }
 
