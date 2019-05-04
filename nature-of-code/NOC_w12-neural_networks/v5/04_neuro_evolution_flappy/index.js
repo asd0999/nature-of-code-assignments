@@ -42,7 +42,7 @@ app.post('/log', function(req, res) {
       for (let row of res2.rows) {
         message.push(row);
       }
-      console.log(message);
+      // console.log(message);
       res.send(message);
     });
   });
