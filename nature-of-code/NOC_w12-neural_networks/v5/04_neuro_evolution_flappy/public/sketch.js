@@ -120,13 +120,12 @@ function toggleState() {
 
 function draw() {
   fill(50);
-  rect(0, 0, 640 + 80, 480);
-  fill(240);
-  rect(640 + 80, 0, 1420, 480);
+  rect(0, 0, 640 + 80, 480); //main flappy bird window
+  // fill(240);
+  // rect(640 + 80, 0, 1420, 480);
 
   // Should we speed up cycles per frame
   let cycles = speedSlider.value();
-  speedSpan.html(cycles);
 
   // How many times to advance the game
   for (let n = 0; n < cycles; n++) {
@@ -212,16 +211,22 @@ function draw() {
   }
 
   // Update DOM Elements
-  highScoreSpan.html(tempHighScore);
-  allTimeHighScoreSpan.html(highScore);
-  hiddenSpan.html(hiddenSlider.value());
-  mutationSpan.html(mutationSlider.value() + '%');
+  speedSpan.html("speed: " + cycles + " >>");
+  highScoreSpan.html("score: " + tempHighScore);
+  allTimeHighScoreSpan.html("high score: " + highScore);
+  hiddenSpan.html("nodes: " + hiddenSlider.value() + " >>");
+  mutationSpan.html("mutation rate: " + mutationSlider.value() + "% >>");
 
-  if (highScore > 60 && allowSaveToDb == true) {
+  if (highScore > 1000 && allowSaveToDb == true) {
     postData(`/log`, {
         nodes: HIDDEN, //HIDDEN from nn
         mutation: _mutation, //mutation*100 from nn
         generation: genCount //genCount from here
+      })
+      .then(() => {
+        textSize(22);
+        fill(50);
+        text("Game learnt! Change settings and test again", 880, 200);
       })
       // .then(data => console.log(JSON.stringify(data))) // JSON-string from `response.json()` call
       .catch(error => console.error(error));
@@ -317,15 +322,40 @@ function postData(url, data) {
       },
       body: JSON.stringify(data), // body data type must match "Content-Type" header
     })
-    .then(response => console.log(response.json())
-      // var array = response.JSON
+    .then(response => {
+      // let data = response.clone().json();
+      // console.log(data);
+      return response.json();
+      console.log(response.json()[0]);
+      // fill(240);
+      // rect(640 + 80, 0, 1420, 480);
+      textSize(32);
+      text("heyyy", 800, 200);
+      // let data = response.json();
+      // text(data[PromiseValue][0], 800, 250);
+      // var array = [];
+      // array = response.JSON
       // let specificObject = array.filter(object => {
-      // return object.id = 23;
+      //   return object.id = 23;
       // })
-    ); // parses JSON response into native Javascript objects
+      // }  ); // parses JSON response into native Javascript objects
 
+    }).then((jsonData) => {
+      // console.log(jsonData);
+      console.log(jsonData[0]);
+      textSize(32);
+      text(jsonData[0].id, 800, 200);
+
+      jsonData.forEach(element => {
+        let pltX = map(element.nodes, 4, 8, 720, 1420);
+        let pltY = map(element.generation, 1, 100, 480, 0);
+        // text(element.id, 800, 200);
+        ellipse(pltX, pltY, 20, 20);
+      });
+
+
+    });
 }
-
 // function getData(url) {
 //   $.get("/", function(data) {
 //     console.log(data);
