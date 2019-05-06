@@ -12,7 +12,6 @@ class Bird {
     this.y = 480 / 2;
     this.r = 12;
     this.inputs = [];
-
     // Gravity, lift and velocity
     this.gravity = 0.8;
     this.lift = -12;
@@ -126,12 +125,14 @@ class Bird {
     } else {
       fill(random(100));
     }
-    if (((frameCount - fc_start) / 3) % 1420 == 0) {
-      push();
-      fill(240);
-      rect(0, 480, 1420, 480);
-      pop();
-    }
-    ellipse(((frameCount - fc_start) / 3) % 1420, 530 + this.y / 3, 0.75, 0.75);
+    // if (((frameCount - fc_start) / 2) % 1420 == 0) {
+    // push();
+    // fill(240);
+    // rect(0, 480, 1420, 480);
+    // pop();
+    // y_increment += 200;
+    // console.log(y_increment);
+    // }
+    ellipse(((frameCount - fc_start) / 3) % 1420, y_increment + this.y / 3, 0.75, 0.75);
   }
 }

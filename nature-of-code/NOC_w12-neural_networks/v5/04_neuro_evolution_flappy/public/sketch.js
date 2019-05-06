@@ -20,6 +20,7 @@ let genCount = 1;
 let fc_start = 0;
 // let fc_stop = 0;
 // let fc_diff = 0;
+let y_increment = 530;
 
 // var nn = require("./nn.js");
 
@@ -45,7 +46,7 @@ let saveButton;
 
 function setup() {
   // createCanvas(640, 480);
-  createCanvas(640 * 2 + 140, 480 * 1.5); //1280+140 = (1420, 720)
+  createCanvas(640 * 2 + 140, 480 * 3); //1280+140 = (1420, 720)
   background(240);
   tf.setBackend('cpu');
   // canvas.parent('canvascontainer');
@@ -88,7 +89,7 @@ function initialise() {
   genCount = 1;
   highScore = 0;
   fc_start = frameCount;
-
+  y_increment = 530;
   allowSaveToDb = true;
 }
 
@@ -98,7 +99,7 @@ function saveModel() {
 
 function genGap() {
   stroke(255, 0, 0);
-  line(((frameCount - fc_start) / 3) % 1420, 507, ((frameCount - fc_start) / 3) % 1420, 690);
+  line(((frameCount - fc_start) / 3) % 1420, y_increment - 27, ((frameCount - fc_start) / 3) % 1420, 690 - 530 + y_increment);
   genCount += 1;
 }
 
@@ -217,7 +218,7 @@ function draw() {
   hiddenSpan.html("nodes: " + hiddenSlider.value() + " >>");
   mutationSpan.html("mutation rate: " + mutationSlider.value() + "% >>");
 
-  if (highScore > 1000 && allowSaveToDb == true) {
+  if (highScore > 10000 && allowSaveToDb == true) {
     postData(`/log`, {
         nodes: HIDDEN, //HIDDEN from nn
         mutation: _mutation, //mutation*100 from nn
@@ -234,6 +235,15 @@ function draw() {
 
     allowSaveToDb = false;
     console.log('posted!');
+  }
+
+  if (((frameCount - fc_start) / 3) % 1420 == 0) {
+    // push();
+    // fill(240);
+    // rect(0, 480, 1420, 480);
+    // pop();
+    y_increment += 200;
+    console.log(y_increment);
   }
 
   // Draw everything!
@@ -343,8 +353,8 @@ function postData(url, data) {
     }).then((jsonData) => {
       // console.log(jsonData);
       console.log(jsonData[0]);
-      textSize(32);
-      text(jsonData[0].id, 800, 200);
+      // textSize(32);
+      // text(jsonData[0].id, 800, 200);
 
       jsonData.forEach(element => {
         let pltX = map(element.nodes, 4, 8, 720, 1420);
