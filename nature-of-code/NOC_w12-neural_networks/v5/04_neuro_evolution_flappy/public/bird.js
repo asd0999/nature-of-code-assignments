@@ -121,9 +121,9 @@ class Bird {
     noStroke();
     let runbeststate = r;
     if (r) {
-      fill(0, 0, 255);
+      fill(255, 0, 0);
     } else {
-      fill(random(100));
+      fill(random(100), random(255), random(255));
     }
     // if (((frameCount - fc_start) / 2) % 1420 == 0) {
     // push();
@@ -133,6 +133,6 @@ class Bird {
     // y_increment += 200;
     // console.log(y_increment);
     // }
-    ellipse(((frameCount - fc_start) / 3) % 1420, y_increment + this.y / 3, 0.75, 0.75);
+    ellipse(((frameCount - fc_start) / 3) % 1420, y_increment + this.y / 3, 1, 1);
   }
 }

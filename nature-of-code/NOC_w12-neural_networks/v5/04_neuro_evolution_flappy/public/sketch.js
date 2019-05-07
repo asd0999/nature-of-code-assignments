@@ -1,5 +1,4 @@
-// Daniel Shiffman
-// Nature of Code
+//code adapted from Daniel Shiffman's Nature of Code series
 // https://github.com/nature-of-code/noc-syllabus-S19
 
 // This flappy bird implementation is adapted from:
@@ -44,15 +43,18 @@ let runBest = false;
 let runBestButton;
 let saveButton;
 
+function preload() {
+  img = loadImage('MLgraph.png');
+}
+
 function setup() {
   // createCanvas(640, 480);
   createCanvas(640 * 2 + 140, 480 * 3); //1280+140 = (1420, 720)
-  background(240);
+  background(255);
   tf.setBackend('cpu');
   // canvas.parent('canvascontainer');
 
   allowSaveToDb = false;
-
 
   // Access the interface elements
   speedSlider = select('#speedSlider');
@@ -77,7 +79,11 @@ function setup() {
 function initialise() {
   // noLoop();
   console.log('initialised!');
-  background(240);
+  background(255);
+  textSize(20);
+  strokeWeight(0.25);
+  text("static graph made using data captured", 920, 485);
+
   activeBirds = [];
   allBirds = [];
   // console.log(hiddenSlider.value());
@@ -120,10 +126,16 @@ function toggleState() {
 }
 
 function draw() {
+  // console.log(mouseX);
   fill(50);
   rect(0, 0, 640 + 80, 480); //main flappy bird window
   // fill(240);
   // rect(640 + 80, 0, 1420, 480);
+
+  // Displays the image at its actual size at point (0,0)
+  image(img, 720, 0);
+  // Displays the image at point (0, height/2) at half size
+  // image(img, 710, 0, img.width, img.height / 1.1);
 
   // Should we speed up cycles per frame
   let cycles = speedSlider.value();
@@ -212,11 +224,11 @@ function draw() {
   }
 
   // Update DOM Elements
-  speedSpan.html("speed: " + cycles + " >>");
+  speedSpan.html("speed: " + cycles + " >> ");
   highScoreSpan.html("score: " + tempHighScore);
   allTimeHighScoreSpan.html("high score: " + highScore);
-  hiddenSpan.html("nodes: " + hiddenSlider.value() + " >>");
-  mutationSpan.html("mutation rate: " + mutationSlider.value() + "% >>");
+  hiddenSpan.html("nodes: " + hiddenSlider.value() + " >> ");
+  mutationSpan.html("mutation rate: " + mutationSlider.value() + "% >> ");
 
   if (highScore > 10000 && allowSaveToDb == true) {
     postData(`/log`, {
@@ -226,8 +238,8 @@ function draw() {
       })
       .then(() => {
         textSize(22);
-        fill(50);
-        text("Game learnt! Change settings and test again", 880, 200);
+        fill(0);
+        text("Game learnt! Change settings and test again", 150, 500);
       })
       // .then(data => console.log(JSON.stringify(data))) // JSON-string from `response.json()` call
       .catch(error => console.error(error));
@@ -289,8 +301,9 @@ function draw() {
     }
   }
 
-  fill(255);
-  rect(5, 485, 100, 20);
+  fill(240);
+  stroke(0);
+  rect(0, 485, 100, 20);
   fill(50);
   textSize(15);
   text("Generation " + genCount, 5, 500);
@@ -352,16 +365,16 @@ function postData(url, data) {
 
     }).then((jsonData) => {
       // console.log(jsonData);
-      console.log(jsonData[0]);
+      // console.log(jsonData[0]);
       // textSize(32);
       // text(jsonData[0].id, 800, 200);
 
-      jsonData.forEach(element => {
-        let pltX = map(element.nodes, 4, 8, 720, 1420);
-        let pltY = map(element.generation, 1, 100, 480, 0);
-        // text(element.id, 800, 200);
-        ellipse(pltX, pltY, 20, 20);
-      });
+      // jsonData.forEach(element => {
+      //   let pltX = map(element.nodes, 4, 8, 720, 1420);
+      //   let pltY = map(element.generation, 1, 100, 480, 0);
+      //   // text(element.id, 800, 200);
+      //   ellipse(pltX, pltY, 20, 20);
+      // });
 
 
     });
