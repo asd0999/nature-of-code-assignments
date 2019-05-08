@@ -230,7 +230,7 @@ function draw() {
   hiddenSpan.html("nodes: " + hiddenSlider.value() + " >> ");
   mutationSpan.html("mutation rate: " + mutationSlider.value() + "% >> ");
 
-  if (highScore > 10000 && allowSaveToDb == true) {
+  if (highScore > 1000 && allowSaveToDb == true) {
     postData(`/log`, {
         nodes: HIDDEN, //HIDDEN from nn
         mutation: _mutation, //mutation*100 from nn

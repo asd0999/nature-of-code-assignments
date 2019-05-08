@@ -78,6 +78,7 @@ class Bird {
     noStroke();
     fill(random(160));
     ellipse(width / 2 + 80 + frameCount / 3, height / 2 + this.y / 3, 0.5, 0.5);
+
     // ellipse(1000, closest.top, 12, 12);
     // ellipse(1000, closest.bottom, 12, 12);
     // ellipse(closest.x, closest.top, 12, 12);

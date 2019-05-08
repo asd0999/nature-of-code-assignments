@@ -82,7 +82,7 @@ function initialise() {
   background(255);
   textSize(20);
   strokeWeight(0.25);
-  text("static graph made using data captured", 920, 485);
+  text("static graph made using data captured till date", 920 - 50, 485);
 
   activeBirds = [];
   allBirds = [];
@@ -132,10 +132,7 @@ function draw() {
   // fill(240);
   // rect(640 + 80, 0, 1420, 480);
 
-  // Displays the image at its actual size at point (0,0)
   image(img, 720, 0);
-  // Displays the image at point (0, height/2) at half size
-  // image(img, 710, 0, img.width, img.height / 1.1);
 
   // Should we speed up cycles per frame
   let cycles = speedSlider.value();
@@ -230,7 +227,7 @@ function draw() {
   hiddenSpan.html("nodes: " + hiddenSlider.value() + " >> ");
   mutationSpan.html("mutation rate: " + mutationSlider.value() + "% >> ");
 
-  if (highScore > 10000 && allowSaveToDb == true) {
+  if (highScore > 10 && allowSaveToDb == true) {
     postData(`/log`, {
         nodes: HIDDEN, //HIDDEN from nn
         mutation: _mutation, //mutation*100 from nn
@@ -349,32 +346,27 @@ function postData(url, data) {
       // let data = response.clone().json();
       // console.log(data);
       return response.json();
-      console.log(response.json()[0]);
-      // fill(240);
-      // rect(640 + 80, 0, 1420, 480);
-      textSize(32);
-      text("heyyy", 800, 200);
-      // let data = response.json();
-      // text(data[PromiseValue][0], 800, 250);
-      // var array = [];
-      // array = response.JSON
-      // let specificObject = array.filter(object => {
-      //   return object.id = 23;
-      // })
-      // }  ); // parses JSON response into native Javascript objects
-
     }).then((jsonData) => {
       console.log(jsonData);
       // console.log(jsonData[0]);
       // textSize(32);
       // text(jsonData[0].id, 800, 200);
+      // text(jsonData[0].nodes, 800, 220);
+      // text(jsonData[0].mutation, 800, 240);
+      // text(jsonData[0].generation, 800, 260);
 
-      // jsonData.forEach(element => {
-      //   let pltX = map(element.nodes, 4, 8, 720, 1420);
-      //   let pltY = map(element.generation, 1, 100, 480, 0);
-      //   // text(element.id, 800, 200);
-      //   ellipse(pltX, pltY, 20, 20);
-      // });
+      jsonData.forEach(element => {
+        let pltN = map(element.nodes, 4, 8, 10, 450);
+        let pltM = map(element.mutation, 0, 100, 450, 10);
+        let pltG = map(element.generation, 1, 100, 450, 10);
+        let pltX = map(element.id, 112, 133, 800, 1340);
+        fill(255, 0, 0); //nodes = red
+        ellipse(pltX, pltN, 10, 10);
+        fill(0, 255, 0); //mutation = green
+        ellipse(pltX, pltM, 10, 10);
+        fill(0, 0, 255); //generation = blue
+        ellipse(pltX, pltG, 10, 10);
+      });
 
 
     });
